@@ -10,7 +10,7 @@ The easiest way to build TaskQueue is to import the supplied Eclipse project fil
 
 # Using Task Queue
 ---
-TaskQueue is a FIFO shell command queuing system that uses Java's Process and Runtime classes to execute shell commands. TaskQueue is equipped with tools to help manage and execute queued tasks. Below are some examples of use-cases for TaskQueue.
+TaskQueue is a FIFO shell command queuing system that uses Java's Process and Runtime classes to execute shell commands. TaskQueue is equipped with tools to help manage and execute queued tasks. Below is an outline of TaskQueue's tools accompanied with the corresponding syntax.
 
 ### First Things First
 
@@ -79,11 +79,36 @@ The number of elements that are current in the queue can be found using the `cou
 int size = myTaskQueue.count(); // count elements in task queue
 ```
 ## Getting Results
-TaskQueue comes with the TaskResults class. This class is concerned with gathering results after the execution of a given task. TaskResults contains static data members and therefore does not need to be instantiated with `new`.
+The TaskResults class is concerned with storing results for executed tasks. TaskResults contains static data members and therefore does not need to be instantiated with `new`.
 
-You can query the results for a given task by using the `result(String GUID)` method. This method takes the GUID of a given task that has been executed and returns a TaskResult object.
+You can query the results for a given task by using the `result(String GUID)` method. This method takes the GUID of a given task that has been executed and returns a TaskResult object containing information about the processes execution.
+
+You can get an array containing all process object by using the `results()` method. This returns an array of TaskResult objects for all tasks that have been executed.
 
 ```java
 TaskResult result = TaskResults.result(t.getGUID()); // returns the TaskResult object for task T
-
+TaskResult results[] = TaskResults.results(); // all results for all executed tasks
 ```
+
+1. `task_guid` The GUID of the task
+2. A boolean `succeeded` that determines if the task terminated without error
+3. The `return_code` for the completed task
+4. A String `output` that contains the concatenated output stream from the process
+5. A string `exception` that contains the concatenated error stream from the process
+6. `state`, which is contains a value of the Enumerated Type TaskState. The value can be PENDING for tasks that are still executing and FINISHED for tasks that have completed executing.
+7. And lastly a integer `execution_duration` that contains the time in milliseconds it took for the given task to complete
+
+All of these values, as seen before, can be accessed using getters.
+
+```java
+result.getTaskGUID(); // returns the guid for the given task
+result.getSucceeded(); // returns whether the task succeeded
+result.getReturnCode(); // returns the return code for the executed process
+result.getOutput(); // returns a string of the output stream from the process
+result.getException(); // returns a string of the error stream from the process
+result.getState(); // returns a TaskState of the processes state
+result.getExecutionDuration(); // returns the milliseconds it took for the process to execute
+```
+
+#Notes
+During task execution, Java's Process and Runtime classes are used to create a sub process that executes a given task's command line. Enable to gather results after this sub processes execution, a thread block must be put in place to wait for the process to terminate. If TaskQueue is run on a single thread, the main thread running the application will be blocked while the sub process executes. To remedy this issue, a thread pool can be created using Java's Threads and Runnable classes in your application to create a new thread for each execution. The wait statement will then block the newly created thread instead of blocking the main thread.
