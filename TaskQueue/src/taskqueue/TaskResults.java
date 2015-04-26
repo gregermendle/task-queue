@@ -8,6 +8,8 @@ public final class TaskResults {
 	
 	private static Map<String, TaskResult> taskResults = new HashMap<String, TaskResult>(); 
 	
+	
+	// private constructor prevents use of new
 	private TaskResults(){
 	}
 	

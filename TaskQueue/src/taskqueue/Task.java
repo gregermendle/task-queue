@@ -29,7 +29,7 @@ public class Task{
 			
 			String guid = this.GUID.toString();
 			
-			String output = "", exception = "";
+			String output = "", exception = "", line = "";
 			
 			// Get the current time to later calculate execution time
 			start = System.currentTimeMillis();
@@ -54,6 +54,16 @@ public class Task{
 			BufferedReader stdError = new BufferedReader(
 					new InputStreamReader(exec.getErrorStream())
 			);
+			
+			// Read in output from our Stream
+			while((line = stdOut.readLine()) != null){
+				output += line;
+			}
+			
+			// Read in error output from our Stream
+			while((line = stdError.readLine()) != null){
+				exception += line;
+			}
 			
 			// Block the current thread until the process has terminated
 			try{
@@ -105,6 +115,18 @@ public class Task{
 	}
 	
 	public String getDescription(){
+		return this.description;
+	}
+	
+	/*
+	 * Getters for our objects data members
+	 */
+	
+	public String setCommand(){
+		return this.command;
+	}
+	
+	public String setDescription(){
 		return this.description;
 	}
 }

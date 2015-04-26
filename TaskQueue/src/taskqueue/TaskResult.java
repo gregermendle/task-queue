@@ -8,8 +8,8 @@ public class TaskResult {
 	private int return_code;				// The return code returned after execution
 	private String output = "";					// Standard Output from task
 	private String exception = "";				// Exceptions thrown by the task during execution
-	private double execution_duration = 0.0;	// Duration of execution for task
-	
+	private long execution_duration;	// Duration of execution for task
+
 	public TaskResult(String task_guid){
 		
 		this.task_guid = task_guid;
@@ -52,7 +52,7 @@ public class TaskResult {
 		return this.exception;
 	}
 	
-	public double getExecutionDuration(){
+	public long getExecutionDuration(){
 		return this.execution_duration;
 	}
 	
@@ -84,7 +84,7 @@ public class TaskResult {
 		this.exception = exception;
 	}
 	
-	public void setExecutionDuration(double execution_duration){
+	public void setExecutionDuration(long execution_duration){
 		this.execution_duration = execution_duration;
 	}
 	
