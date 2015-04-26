@@ -95,8 +95,8 @@ TaskResult results[] = TaskResults.results(); // all results for all executed ta
 3. The `return_code` for the completed task
 4. A String `output` that contains the concatenated output stream from the process
 5. A string `exception` that contains the concatenated error stream from the process
-6. `state`, which is contains a value of the Enumerated Type TaskState. The value can be PENDING for tasks that are still executing and FINISHED for tasks that have completed executing.
-7. And lastly a integer `execution_duration` that contains the time in milliseconds it took for the given task to complete
+6. `state`, which contains a value corresponding to the Enumerated Type TaskState. The value can be PENDING for tasks that are still executing and FINISHED for tasks that have terminated.
+7. And lastly an integer `execution_duration` that contains the time in milliseconds it took for the given task to complete
 
 All of these values, as seen before, can be accessed using getters.
 
