@@ -110,5 +110,5 @@ result.getState(); // returns a TaskState of the processes state
 result.getExecutionDuration(); // returns the milliseconds it took for the process to execute
 ```
 
-#Notes
+# Notes
 During task execution, Java's Process and Runtime classes are used to create a sub process that executes a given task's command line. Enable to gather results after this sub processes execution, a thread block must be put in place to wait for the process to terminate. If TaskQueue is run on a single thread, the main thread running the application will be blocked while the sub process executes. To remedy this issue, a thread pool can be created using Java's Threads and Runnable classes in your application to create a new thread for each execution. The wait statement will then block the newly created thread instead of blocking the main thread.
